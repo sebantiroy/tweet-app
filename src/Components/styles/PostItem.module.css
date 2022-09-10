@@ -1,0 +1,22 @@
+
+.loveButton:hover {
+    cursor: pointer;
+}
+
+.commentButton:hover {
+    cursor: pointer;
+}
+
+.shareButton:hover {
+    cursor: pointer;
+}
+
+.sendCommentButton:hover {
+    cursor: pointer;
+}
+.deleteButton:hover {
+    cursor: pointer;
+}
+.editButton:hover {
+    cursor: pointer;
+}
