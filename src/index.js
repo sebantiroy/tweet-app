@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { render } from '@testing-library/react';
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <React.StrictMode>
       <App />

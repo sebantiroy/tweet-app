@@ -31,9 +31,6 @@ export default function Login() {
     const[LoginRequest,setLoginRequest]=useState({});
     const handleForm=(e)=>
     {
-        
-       //console.log(LoginRequest);
-      
        postSignInInfo(JSON.stringify(LoginRequest));
        e.preventDefault();
     };
@@ -43,7 +40,7 @@ export default function Login() {
         axios.post(`${base_url}/login`,data,{
             headers: {
             'Content-Type': 'application/json',
-            'Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb25hIiwiaWF0IjoxNjYxOTM1MTEzLCJleHAiOjE2NjIwMjE1MTN9.WFyss5ML9oGeTzc4n_W-mYtr7TdBmoSxrbrUZnGRctg"
+            
             }
 
           }).then(
@@ -128,7 +125,7 @@ export default function Login() {
               </Row>
               <Row className="mb-3">
                 <Form.Group as={Col} md="12" controlId="signInEmail" >
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
                     name="username"

@@ -3,12 +3,13 @@ import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-
+import { getAllProfilePosts}  from "../Feature/UserPostSliece"
 import { Hashicon } from "@emeraldpay/hashicon-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Post() {
+  const dispatch = useDispatch();
     let navigate = useNavigate();
     const[Postlist,setPostlist]=useState({});
     const [userFullname, setUserFullname] = useState(
@@ -19,6 +20,7 @@ export default function Post() {
         const [disablePostButton, setDisablePostButton] = useState(true);
         const[Post,setPost]=useState({});
         const token=localStorage.getItem("psnToken");
+        const postList = useSelector((state) => state.UserPostSlieceReducer.userList)
         axios.defaults.headers.common={
             "Authorization" : `Bearer ${token}`
         }
@@ -89,11 +91,14 @@ export default function Post() {
             console.log(Post);
             createPost(Post);
             //window.location.reload(false);
-            setTimeout(function(){
-                window.location.reload(1);
-             }, 5000);
+          //   setTimeout(function(){
+          //       window.location.reload(1);
+          //    }, 5000);
         
+          dispatch(getAllProfilePosts());
+          dispatch(getAllProfilePosts());
           }
+
   return (
     <div>
   {/* <h1>PostCompose component</h1> */}
@@ -118,6 +123,7 @@ export default function Post() {
         />
       </Form.Group>
       
+
       <div className="d-flex justify-content-end align-items-center">
             <span>Characters: {postContentCount}/200</span>
             <Button

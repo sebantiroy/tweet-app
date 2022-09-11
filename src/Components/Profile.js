@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"
-import { getTweets }  from "../Feature/TweetListSliece";
-import TweetPostSliece from "../Feature/TweetPostSliece";
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
 

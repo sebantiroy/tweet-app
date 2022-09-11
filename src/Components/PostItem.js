@@ -1,8 +1,8 @@
 import React, { useState ,useEffect } from "react";
-
 import { Hashicon } from "@emeraldpay/hashicon-react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
+import { getAllProfilePosts}  from "../Feature/UserPostSliece"
 
 import {
   RiHeartFill,
@@ -18,6 +18,7 @@ import { deletePost,updatePost,lovePost}  from "../Feature/TweetPostSliece"
 import styles from "./styles/PostItem.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import NewsFeedContent from "./NewsFeedContent";
 
 
 function PostItem(props) {
@@ -37,19 +38,22 @@ function PostItem(props) {
   const username=localStorage.getItem('psnUsername')
   const [post,setPost]=useState();
   const [postId, setPostId] = useState(props.postId);
-  const [pusername,setPusername]=useState(props.firstName);
+  const [pusername,setPusername]=useState(props.username);
   const[love,setLove]=useState(props.loveList);
+  const postList = useSelector((state) => state.UserPostSlieceReducer.userList)
  // const [love,setLove]=useState(props.loveList);
+ const [cnt,setCnt]=useState(1);
     
   useEffect(()=>{
     
-    if (props.loveList.includes(username
+    if (props.loveList.includes(pusername
       )) {
       setLoveStatus(true);
     } else {
       setLoveStatus(false);
     }
     console.log(pusername);
+    
 
 
 },[])
@@ -60,25 +64,32 @@ function PostItem(props) {
   {
     e.preventDefault();
     console.log(post)
-    dispatch(updatePost({
+    if(cnt==1)
+    {
+      dispatch(updatePost({
         postId:postId,
         postContent:post
     }));
+    
+    }
+    
     setEditContent("");
-    setTimeout(function(){
-        window.location.reload(1);
-     }, 5000);
+    // setTimeout(function(){
+    //     window.location.reload(1);
+    //  }, 5000);
     //window.location.reload(false);
-    navigate("/newsfeed")
+    
+       dispatch(getAllProfilePosts());
+       dispatch(getAllProfilePosts());
   }
   function handleDeleteClick(e)
 {    e.preventDefault();
      dispatch(deletePost(postId));
-     setTimeout(function(){
-        window.location.reload(1);
-     }, 5000);
+     
      //window.location.reload(false)
-
+     dispatch(getAllProfilePosts());
+     dispatch(getAllProfilePosts());
+     
      
   }
   function toast()
@@ -88,16 +99,19 @@ function PostItem(props) {
 
   function handleLoveClick(e) {
     dispatch(lovePost(postId))
+    
     if (!props.loveList.includes(pusername)) {
       setLoveStatus(true);
+      
+    
     } else {
       setLoveStatus(false);
+      
     }
     console.log(love);
     console.log(love)
-    setTimeout(function(){
-      window.location.reload(1);
-   }, 50);
+    dispatch(getAllProfilePosts());
+    dispatch(getAllProfilePosts());
   }
 
   function handleShareClick(e) {
@@ -147,6 +161,7 @@ function PostItem(props) {
           </div>
           <div className="d-flex flex-column">
           <div className="fw-bold">{props.firstName + " " + props.lastName+" (@"+props.username+")"}</div>
+          <div className="text-secondary">{timeAgo.format(new Date(props.postDate).getTime())}</div>
          
           </div>
         </div>

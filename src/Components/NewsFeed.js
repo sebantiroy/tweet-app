@@ -1,20 +1,15 @@
 import React, { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
-import logo from "./assets/psn-logo-large.png";
-import MyProfile from "./MyProfile";
+import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 
 import {
   RiNewspaperLine,
-  RiRadarLine,
   RiBaseStationLine,
   RiFolderUserLine,
   RiLogoutBoxLine,
-  RiDownloadLine,
 } from "react-icons/ri";
 
 import styles from "./styles/NewsFeed.module.css";
-import NewsFeedContent from "./NewsFeedContent";
 
 function NewsFeed() {
   let navigate = useNavigate();
@@ -22,13 +17,17 @@ function NewsFeed() {
   function handleClick(e) {
     navigate("/newsfeed/allaccounts");
   }
+  function handleSignOut(e) {
+    localStorage.removeItem("psnUserId");
+    localStorage.removeItem("psnToken");
+    localStorage.removeItem("psnUserEmail");
+    navigate("/login");
+  }
 
   
 
   useEffect(() => {
-      console.log(localStorage.getItem("psnToken"));
-      console.log(localStorage.getItem("psnUsername"));
-      localStorage.setItem("flag",1);
+      
 
   });
 
@@ -77,6 +76,7 @@ function NewsFeed() {
                 <Nav.Link>
                   <li
                     className={`list-group-item fs-5 py-3 text-success shadow ${styles.signOutButton}`}
+                    onClick={handleSignOut}
 
                   >
                     <span>

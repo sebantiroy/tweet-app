@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"
 import { getAllProfilePosts}  from "../Feature/UserPostSliece"
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
-import { Spinner } from "react-bootstrap";
 import Post from "./Post";
-import styles from "./styles/postItem.css"
 
 
 export default function NewsFeedContent() {
+
     const dispatch = useDispatch();
     const postList = useSelector((state) => state.UserPostSlieceReducer.userList)
     const [userFullname, setUserFullname] = useState(

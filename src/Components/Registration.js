@@ -3,7 +3,6 @@ import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reac
 import axios from 'axios';
 import base_url from './bootApi';
 import Row from "react-bootstrap/Row";
-import styles from "./styles/SignInModule.css";
 export default function Registration() {
     useEffect(()=>{
         document.title="Register user"
