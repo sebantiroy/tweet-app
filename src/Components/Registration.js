@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import axios from 'axios';
 import base_url from './bootApi';
+import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 export default function Registration() {
+  let navigate = useNavigate();
     useEffect(()=>{
         document.title="Register user"
     },[])
@@ -27,6 +29,7 @@ export default function Registration() {
             {
                 console.log(response);
                 console.log("success");
+                navigate("/login");
             },
             (error)=>
             {

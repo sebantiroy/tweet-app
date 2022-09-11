@@ -99,8 +99,9 @@ function PostItem(props) {
 
   function handleLoveClick(e) {
     dispatch(lovePost(postId))
-    
-    if (!props.loveList.includes(pusername)) {
+    dispatch(getAllProfilePosts());
+    dispatch(getAllProfilePosts());
+    if (!props.loveList.includes(pusername) && loveStatus==false) {
       setLoveStatus(true);
       
     
@@ -110,8 +111,7 @@ function PostItem(props) {
     }
     console.log(love);
     console.log(love)
-    dispatch(getAllProfilePosts());
-    dispatch(getAllProfilePosts());
+    
   }
 
   function handleShareClick(e) {

@@ -31,8 +31,9 @@ export default function Login() {
     const[LoginRequest,setLoginRequest]=useState({});
     const handleForm=(e)=>
     {
+      e.preventDefault(); 
        postSignInInfo(JSON.stringify(LoginRequest));
-       e.preventDefault();
+      
     };
    
     const postSignInInfo=(data)=>
