@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import base_url from '../Components/bootApi';
 
 const initialState = {
   
@@ -13,7 +14,7 @@ export const getAllusers = createAsyncThunk(
     async (thunkAPI) => {
       const response = await axios({
         method: "get",
-        url: `http://localhost:8083/api/v1.0/tweets/users/all`,
+        url: `${base_url}/users/all`,
         headers: {
           Authorization: token,
         },

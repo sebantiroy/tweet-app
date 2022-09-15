@@ -17,7 +17,7 @@ export default function UserAccountItem(props) {
     
     <div className="d-flex align-items-center my-5">
       <div> 
-        <Hashicon value={props.id} size={60} />
+        <Hashicon value={props.name} size={60} />
       </div>
       <div className="mx-3 fw-bold">
         <Link

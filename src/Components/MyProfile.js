@@ -25,7 +25,7 @@ export default function MyProfile() {
   return (
     <div className="ex1">
       <h1>My Post</h1>
-      {postList !== null ? (
+      {postList!=null ? (
         postList.map((postItem) => {
           return (
             <PostItem
@@ -37,11 +37,12 @@ export default function MyProfile() {
             content={postItem.tweetMessage}
             postDate={postItem.ctearedAt}
             loveList={postItem.like}
+            commentList={postItem.comment}
             />
           );
         })
       ) : (
-        <span></span>
+        <span>No post yet</span>
       )}
     </div>
   );

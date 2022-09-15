@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import base_url from '../Components/bootApi';
 
 const initialState = {
   userList: null,
@@ -14,7 +15,7 @@ export const getAllProfilePosts = createAsyncThunk(
     async (thunkAPI) => {
       const response = await axios({
         method: "get",
-        url: `http://localhost:8083/api/v1.0/tweets/all`,
+        url: `${base_url}/all`,
         headers: {
           Authorization: token,
         },
@@ -29,7 +30,7 @@ export const getAllProfilePosts = createAsyncThunk(
     async (name,thunkAPI) => {
       const response = await axios({
         method: "get",
-        url: `http://localhost:8083/api/v1.0/tweets/user/search/${name}`,
+        url: `${base_url}/user/search/${name}`,
         headers: {
           Authorization: token,
         },

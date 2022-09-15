@@ -157,8 +157,9 @@ export default function Login() {
               <Button type="submit" variant="success" onClick={handleForm}>
                 Sign In <RiLoginBoxLine />
               </Button>
-              <p> <b>Don't have an account.</b>
-              <Link to="/registration"> Register here</Link> </p>
+               <b>Don't have an account.</b>
+               <Row>
+              <a href="/registration"> Register here</a> </Row>
             </Form>
           )}
         </Formik>

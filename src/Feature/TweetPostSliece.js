@@ -2,6 +2,8 @@ import React from 'react'
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import base_url from '../Components/bootApi';
 
 const initialState = {
   profileId: null,
@@ -12,6 +14,8 @@ const initialState = {
   love:null
 };
 const token=`Bearer ${localStorage.getItem('psnToken')}`;
+
+
 function showSuccessMessage(inputMessage) {
     toast.success(inputMessage, {
       position: "bottom-center",
@@ -41,7 +45,7 @@ export const getProfilePosts = createAsyncThunk(
     async (thunkAPI) => {
       const response = await axios({
         method: "get",
-        url: `http://localhost:8083/api/v1.0/tweets/${localStorage.getItem('psnUsername')}`,
+        url: `${base_url}/${localStorage.getItem('psnUsername')}`,
         headers: {
           Authorization: token,
         },
@@ -56,7 +60,7 @@ export const getProfilePosts = createAsyncThunk(
     async (postId,thunkAPI) => {
       const response = await axios({
         method: "delete",
-        url: `http://localhost:8083/api/v1.0/tweets/${localStorage.getItem('psnUsername')}/delete/${postId}`,
+        url: `${base_url}/${localStorage.getItem('psnUsername')}/delete/${postId}`,
         headers: {
           Authorization: token,
         },
@@ -76,7 +80,7 @@ export const getProfilePosts = createAsyncThunk(
     async ({postId,postContent},thunkAPI) => {
       const response = await axios({
         method: "post",
-        url: `http://localhost:8083/api/v1.0/tweets/${localStorage.getItem('psnUsername')}/update/${postId}`,
+        url: `${base_url}/${localStorage.getItem('psnUsername')}/update/${postId}`,
         headers: {
           Authorization: token,
         },
@@ -100,7 +104,7 @@ export const getProfilePosts = createAsyncThunk(
     async (postId,thunkAPI) => {
       const response = await axios({
         method: "put",
-        url: `http://localhost:8083/api/v1.0/tweets/${localStorage.getItem('psnUsername')}/like/${postId}`,
+        url: `${base_url}/${localStorage.getItem('psnUsername')}/like/${postId}`,
         headers: {
           Authorization: token,
         },

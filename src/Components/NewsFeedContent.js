@@ -35,6 +35,7 @@ export default function NewsFeedContent() {
               content={postItem.tweetMessage}
               postDate={postItem.ctearedAt}
               loveList={postItem.like}
+              commentList={postItem.comment}
             />
           );
         })

@@ -7,7 +7,7 @@ import { getAllProfilePosts}  from "../Feature/UserPostSliece"
 import { Hashicon } from "@emeraldpay/hashicon-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import base_url from "./bootApi";
 export default function Post() {
   const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -60,7 +60,7 @@ export default function Post() {
           }
           const createPost=(inputContent)=> {
     
-              axios.post(`http://localhost:8083/api/v1.0/tweets/${userFullname}/add`,inputContent
+              axios.post(`${base_url}/${userFullname}/add`,inputContent
               ).then(
                   (response)=>
                   {
@@ -69,8 +69,7 @@ export default function Post() {
                     setPostContent("");
                     setPostContentCount(0);
                     setDisablePostButton(true);
-                    
-                  
+                    dispatch(getAllProfilePosts());
 
                   },
                   (error)=>
@@ -95,8 +94,8 @@ export default function Post() {
           //       window.location.reload(1);
           //    }, 5000);
         
-          dispatch(getAllProfilePosts());
-          dispatch(getAllProfilePosts());
+          
+         
           }
 
   return (

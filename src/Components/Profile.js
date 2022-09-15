@@ -30,11 +30,12 @@ export default function Profile() {
                   content={postItem.tweetMessage}
                   postDate={postItem.ctearedAt}
                   loveList={postItem.like}
+                  commentList={postItem.comment}
                 />
               );
             })
           ) : (
-            <span></span>
+            <h1>No post yet</h1>
           )}
         </div>
       );

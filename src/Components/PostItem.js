@@ -3,6 +3,8 @@ import { Hashicon } from "@emeraldpay/hashicon-react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import { getAllProfilePosts}  from "../Feature/UserPostSliece"
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   RiHeartFill,
@@ -19,6 +21,7 @@ import styles from "./styles/PostItem.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NewsFeedContent from "./NewsFeedContent";
+import base_url from "./bootApi";
 
 
 function PostItem(props) {
@@ -32,6 +35,7 @@ function PostItem(props) {
   const [editStatus, setEditStatus] = useState(false);
   const [editContent, setEditContent] = useState(props.content);
   const [sendButtonDisable, setSendButtonDisable] = useState(true);
+  const token=localStorage.getItem("psnToken");
   const [currentUserId, setCurrentUserId] = useState(
     localStorage.getItem("psnUserId")
   );
@@ -41,12 +45,16 @@ function PostItem(props) {
   const [pusername,setPusername]=useState(props.username);
   const[love,setLove]=useState(props.loveList);
   const postList = useSelector((state) => state.UserPostSlieceReducer.userList)
+  const [commentRequest,setCommentRequest]=useState("");
  // const [love,setLove]=useState(props.loveList);
  const [cnt,setCnt]=useState(1);
+ axios.defaults.headers.common={
+  "Authorization" : `Bearer ${token}`
+}
     
   useEffect(()=>{
     
-    if (props.loveList.includes(pusername
+    if (props.loveList.includes(username
       )) {
       setLoveStatus(true);
     } else {
@@ -57,6 +65,30 @@ function PostItem(props) {
 
 
 },[])
+function showSuccessMessage(inputMessage) {
+  toast.success(inputMessage, {
+    position: "bottom-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+}
+function showFailMessage(inputMessage) {
+  toast.error(inputMessage, {
+    position: "bottom-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+}
 
   TimeAgo.addLocale(en);
   const timeAgo = new TimeAgo("en-US");
@@ -92,16 +124,34 @@ function PostItem(props) {
      
      
   }
-  function toast()
-  {
-    console.log(message.message);
-  }
+  const postComments=(commentRequest)=> {
+    
+    axios.post(`${base_url}/${username}/reply/${postId}`,commentRequest
+    ).then(
+        (response)=>
+        {
+          showSuccessMessage("Posted successfully!");
+          console.log(response);
+          setCommentContent("");
+          setSendButtonDisable(true);
+          dispatch(getAllProfilePosts());
+
+        },
+        (error)=>
+        {
+          showFailMessage("Post failed. Please try again later!");
+          console.log(error);
+          
+        }
+        
+    );
+      };
 
   function handleLoveClick(e) {
     dispatch(lovePost(postId))
     dispatch(getAllProfilePosts());
     dispatch(getAllProfilePosts());
-    if (!props.loveList.includes(pusername) && loveStatus==false) {
+    if (!props.loveList.includes(username)) {
       setLoveStatus(true);
       
     
@@ -113,6 +163,13 @@ function PostItem(props) {
     console.log(love)
     
   }
+  function sendComment(e)
+  {
+    e.preventDefault();
+    postComments(commentRequest);
+    dispatch(getAllProfilePosts);
+
+  }
 
   function handleShareClick(e) {
     
@@ -120,6 +177,7 @@ function PostItem(props) {
 
   function handleCommentButtonClick(e) {
     setCommentStatus(!commentStatus);
+
   }
   function handleEditButtonClick(e) {
     setEditStatus(!editStatus);
@@ -127,8 +185,8 @@ function PostItem(props) {
 
   function handleCommentContentChange(e) {
     e.preventDefault();
-
     setCommentContent(e.target.value);
+    setCommentRequest({...commentRequest,tweetString:e.target.value})
 
     if (commentContent.length - 1 > 0 && commentContent.length - 1 <= 100) {
       setSendButtonDisable(false);
@@ -157,7 +215,7 @@ function PostItem(props) {
       <Row>
         <div className="d-flex align-items-center mb-3">
           <div className="mx-3">
-            <Hashicon value={props.userId} size={50} />
+            <Hashicon value={props.firstName + " " + props.lastName} size={50} />
           </div>
           <div className="d-flex flex-column">
           <div className="fw-bold">{props.firstName + " " + props.lastName+" (@"+props.username+")"}</div>
@@ -201,6 +259,9 @@ function PostItem(props) {
               onClick={handleCommentButtonClick}
             >
               <RiMessage2Fill className="text-primary" />
+            </span>
+            <span>
+              {props.commentList.length > 0 ? props.commentList.length : null}
             </span>
             
           </div>
@@ -250,16 +311,33 @@ function PostItem(props) {
                   variant="success"
                   className="p-1"
                   disabled={sendButtonDisable}
-                  onClick={updatePost}
+                  onClick={sendComment}
                   
                 >
                   <RiSendPlane2Fill className="fs-4" />
                 </Button>
               </div>
-            </div>
-            
+            </div>{props.commentList.map((commentItem) => (
+              <div className="border rounded border-info my-3 px-2 pb-2">
+                <div className="d-flex align-items-center my-2">
+                  <div className="me-auto mx-1">
+                    <Hashicon value={commentItem.firstName+" "+commentItem.lastName} size={30} />{" "}
+                    
+                  </div>
+                  <div className="w-100 mx-1 fw-bold">
+                    <span>{commentItem.firstName+" "+commentItem.lastName}
+                    
+                    </span>
+                    
+                  </div>
+                  
+                  
+                </div>
+                
+                <div>{commentItem.tweetMessage}</div>
+              </div>
+            ))}
           </div>
-          
         ) : (
           <span></span>
         )}
