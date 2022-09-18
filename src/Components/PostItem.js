@@ -5,6 +5,8 @@ import en from "javascript-time-ago/locale/en.json";
 import { getAllProfilePosts}  from "../Feature/UserPostSliece"
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { getProfilePosts }  from "../Feature/TweetPostSliece";
+import { getTweets } from "../Feature/TweetListSliece";
 
 import {
   RiHeartFill,
@@ -111,16 +113,37 @@ function showFailMessage(inputMessage) {
     //  }, 5000);
     //window.location.reload(false);
     
-       dispatch(getAllProfilePosts());
-       dispatch(getAllProfilePosts());
+    if(props.code==="1")
+    {
+     dispatch(getAllProfilePosts());
+     dispatch(getAllProfilePosts());
+    }
+    
+    else{
+      dispatch(getProfilePosts())
+      dispatch(getProfilePosts())
+    }
+
   }
   function handleDeleteClick(e)
 {    e.preventDefault();
      dispatch(deletePost(postId));
      
      //window.location.reload(false)
-     dispatch(getAllProfilePosts());
-     dispatch(getAllProfilePosts());
+     if(props.code==="1")
+     {
+      dispatch(getAllProfilePosts());
+      dispatch(getAllProfilePosts());
+     }
+     else if(props.code==="3")
+    {
+      dispatch(getProfilePosts())
+       dispatch(getProfilePosts())
+    }
+     else{
+       dispatch(getTweets(props.username))
+       dispatch(getTweets(props.username))
+     }
      
      
   }
@@ -134,7 +157,20 @@ function showFailMessage(inputMessage) {
           console.log(response);
           setCommentContent("");
           setSendButtonDisable(true);
-          dispatch(getAllProfilePosts());
+          if(props.code==="1")
+          {
+           dispatch(getAllProfilePosts());
+           dispatch(getAllProfilePosts());
+          }
+          else if(props.code==="2")
+          {
+            dispatch(getTweets(props.username))
+          }
+          else{
+            dispatch(getProfilePosts())
+            dispatch(getProfilePosts())
+          }
+     
 
         },
         (error)=>
@@ -149,8 +185,21 @@ function showFailMessage(inputMessage) {
 
   function handleLoveClick(e) {
     dispatch(lovePost(postId))
-    dispatch(getAllProfilePosts());
-    dispatch(getAllProfilePosts());
+    if(props.code==="1")
+     {
+      dispatch(getAllProfilePosts());
+      dispatch(getAllProfilePosts());
+     }
+     else if(props.code==="3")
+    {
+      dispatch(getProfilePosts())
+       dispatch(getProfilePosts())
+    }
+     else{
+       dispatch(getTweets(props.username))
+       dispatch(getTweets(props.username))
+     }
+
     if (!props.loveList.includes(username)) {
       setLoveStatus(true);
       

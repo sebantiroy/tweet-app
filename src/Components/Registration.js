@@ -4,6 +4,7 @@ import axios from 'axios';
 import base_url from './bootApi';
 import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 export default function Registration() {
   let navigate = useNavigate();
     useEffect(()=>{
@@ -46,19 +47,19 @@ export default function Registration() {
       justifyContent: 'center',
       alignItems: 'center',
       
-      width:'200vw',
-      height: '200vh',
+      height: '130vh',
+        width:'500vw'
       
     }}
     >
     <Form onSubmit={handleForm} style={{width:'40%',flexdirection: 'column'}} >
     <Row className="mb-5 text-center">
-                <h1 className="text-success">Sign In</h1>
+                <h1 className="text-success">Sign Up</h1>
               </Row>
     <Row>          
-    <FormGroup>
+    <FormGroup as={Col} md="12"> 
       <Label for="firstName">First Name</Label>
-      <Input type="text"  id="firstName" placeholder="with a placeholder" 
+      <Input required type="text"  id="firstName" placeholder="Firstname" 
       onChange={(e)=>{setSignupRequest({...SignupRequest,firstName: e.target.value});}}
       
       />
@@ -67,7 +68,7 @@ export default function Registration() {
     <Row>
         <FormGroup>
           <Label for="lastName">Last Name</Label>
-          <Input type="text" id="lastName" placeholder="with a placeholder" 
+          <Input required type="text" id="lastName" placeholder="Lastname" 
           onChange={(e)=>{setSignupRequest({...SignupRequest,lastName: e.target.value});}}
           />
         </FormGroup>
@@ -75,7 +76,7 @@ export default function Registration() {
         <Row>
         <FormGroup>
           <Label for="email">Email</Label>
-          <Input type="email"  id="email" placeholder="with a placeholder" 
+          <Input required type="email"  id="email" placeholder="Email" 
           onChange={(e)=>{setSignupRequest({...SignupRequest,email: e.target.value});}}
           
           />
@@ -84,21 +85,21 @@ export default function Registration() {
         <Row>
         <FormGroup>
           <Label for="username">username</Label>
-          <Input type="text" id="username" placeholder="with a placeholder"
+          <Input required type="text" id="username" placeholder="username"
           onChange={(e)=>{setSignupRequest({...SignupRequest,username: e.target.value});}} />
         </FormGroup>
         </Row>
         <Row>
         <FormGroup>
           <Label for="password">password</Label>
-          <Input type="password"  id="password" placeholder="with a placeholder" 
+          <Input required type="password"  id="password" placeholder="password" 
           onChange={(e)=>{setSignupRequest({...SignupRequest,password: e.target.value});}}/>
         </FormGroup>
         </Row>
         <Row>
         <FormGroup>
           <Label for="contactNumber">ContactNumber</Label>
-          <Input type="text"  id="contactNumber" placeholder="with a placeholder" 
+          <Input required type="text"  id="contactNumber" placeholder="Contact Number" 
           onChange={(e)=>{setSignupRequest({...SignupRequest,contactNumber: e.target.value});}}/>
         </FormGroup>
         </Row>

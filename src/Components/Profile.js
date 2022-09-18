@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function Profile() {
     },[])
     return (
         <div className="ex1">
+          <ToastContainer/>
           
           {postList !== null ? (
             postList.map((postItem) => {
@@ -31,6 +33,7 @@ export default function Profile() {
                   postDate={postItem.ctearedAt}
                   loveList={postItem.like}
                   commentList={postItem.comment}
+                  code="2"
                 />
               );
             })

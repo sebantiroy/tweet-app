@@ -15,10 +15,12 @@ function AllAccounts() {
 console.log(storeAccounts);
  
   useEffect(() => {
+    
+    dispatch(getAllusers());
+    dispatch(getAllusers());
     if (localStorage.getItem("psnToken") === null) {
       navigate("/unauthorized");
     }
-    dispatch(getAllusers());
     
     console.log(storeAccounts)
   }, []);

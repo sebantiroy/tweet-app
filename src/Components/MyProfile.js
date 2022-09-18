@@ -4,6 +4,7 @@ import { getProfilePosts }  from "../Feature/TweetPostSliece";
 import TweetPostSliece from "../Feature/TweetPostSliece";
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
+import { ToastContainer, toast } from "react-toastify";
 
 
 export default function MyProfile() {
@@ -24,6 +25,7 @@ export default function MyProfile() {
 
   return (
     <div className="ex1">
+      <ToastContainer/>
       <h1>My Post</h1>
       {postList!=null ? (
         postList.map((postItem) => {
@@ -38,6 +40,7 @@ export default function MyProfile() {
             postDate={postItem.ctearedAt}
             loveList={postItem.like}
             commentList={postItem.comment}
+            code="3"
             />
           );
         })

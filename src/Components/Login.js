@@ -3,11 +3,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
 
-import Form from "react-bootstrap/Form";
+
+import { Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/esm/Container";
 
 import { RiLoginBoxLine } from "react-icons/ri";
 
@@ -21,10 +20,7 @@ export default function Login() {
 
   let navigate = useNavigate();
 
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  });
+
     useEffect(()=>{
         document.title="Login user"
     },[])
@@ -47,7 +43,8 @@ export default function Login() {
           }).then(
             (response)=>
             {
-                //console.log(response);
+                console.log(response);
+                showSuccessMessage(response.data.message);
                 console.log(response);
                 console.log("success");
                 localStorage.setItem("psnUserId", response.data.id);
@@ -57,18 +54,33 @@ export default function Login() {
                 localStorage.setItem("psnToken", response.data.jwt);
                 navigate("/newsfeed");
                 
+                
+                
+                
             },
             (error)=>
             {
                 console.log(error);
                 console.log("error");
-                showWarningToast("Wrong username or password");
+                showWarningToast(error.response.data.message);
             }
         );
 
     };
+    function showSuccessMessage(inputMessage) {
+      toast.success(inputMessage, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
     function showWarningToast(inputMessage) {
-      toast.warn("Invalid email or password", {
+      toast.warn(inputMessage, {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -87,32 +99,10 @@ export default function Login() {
         alignItems: 'center',
         height: '100vh',
         width:'500vw'
-      }}
-      >
-        <ToastContainer />
-        <Formik
-          validationSchema={schema}
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values, {setSubmitting}) => {
-            postSignInInfo(values);
-            setSubmitting(false);
-          }}
-        >
-          {({
-            handleSubmit,
-            handleChange,
-            handleBlur,
-            values,
-            touched,
-            isInValid,
-            errors,
-          }) => (
-            <Form
-              noValidate
-              onSubmit={handleSubmit}
+      }}>
+        <ToastContainer/>
+            <Form onSubmit={handleForm}
+            
               className={styles.formContainer}
             //   style={{
             // //     width: '30%',
@@ -125,44 +115,32 @@ export default function Login() {
                 <h1 className="text-success">Sign In</h1>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="signInEmail" >
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="username"
-
-                    onChange={(e)=>{setLoginRequest({...LoginRequest,username: e.target.value});}}
-                    
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please enter username
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <FormGroup as={Col} md="12" >
+                  <Label for="username">Username</Label>
+                  <Input required type="text" id="username" placeholder="username"
+                  
+                    onChange={(e)=>{setLoginRequest({...LoginRequest,username: e.target.value});}}/>
+                  
+                  
+                </FormGroup>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="signInPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    onChange={(e)=>{setLoginRequest({...LoginRequest,password: e.target.value});}}
-                
-                  />
+                <FormGroup as={Col} md="12">
+                <Label for="password">Password</Label>
+          <Input required type="password" id="password" placeholder="password"
+          onChange={(e)=>{setLoginRequest({...LoginRequest,password: e.target.value});}}/>
   
-                  <Form.Control.Feedback type="invalid">
-                    Please enter your password
-                  </Form.Control.Feedback>
-                </Form.Group>
+                  
+                </FormGroup>
               </Row>
-              <Button type="submit" variant="success" onClick={handleForm}>
+              <Button color="success">
                 Sign In <RiLoginBoxLine />
               </Button>
                <b>Don't have an account.</b>
                <Row>
               <a href="/registration"> Register here</a> </Row>
             </Form>
-          )}
-        </Formik>
+          
         
       </Container>
     );

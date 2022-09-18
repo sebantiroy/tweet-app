@@ -36,6 +36,7 @@ export default function NewsFeedContent() {
               postDate={postItem.ctearedAt}
               loveList={postItem.like}
               commentList={postItem.comment}
+              code="1"
             />
           );
         })
