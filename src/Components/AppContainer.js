@@ -17,7 +17,7 @@ function AppContainer() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage name="Sebanti" />} />
+        <Route path="/" element={<Login/>}/>
         <Route path="login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/newsfeed" element={<NewsFeed />}>
